@@ -1,0 +1,1124 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "JACD REST API DOC",
+    "description": "This document contains the api parameters and responses to be utilised by the frontend."
+  },
+  "tags": [
+    {
+      "name": "User Auth",
+      "description": "Managing user authentication and authorisation"
+    },
+    {
+      "name": "Project Management",
+      "description": "Managing projects"
+    },
+    {
+      "name": "Task Management",
+      "description": "Managing tasks"
+    },
+    {
+      "name": "Profile and User Management",
+      "description": "Managing user profiles"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "AuthToken": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Authorization Bearer Token"
+          }
+        }
+      }
+    },
+    "fields": {
+      "Email": {
+        "type": "string",
+        "example": "example@unsw.edu.au",
+        "description": "Email address of the user attempting to login"
+      },
+      "Password": {
+        "type": "string",
+        "description": "Password of the user attempting to login",
+        "example": "examplePassword"
+      },
+      "RememberMe": {
+        "type": "string",
+        "description": "Whether to remember the user session after login",
+        "example": "true"
+      },
+      "FirstName": {
+        "type": "string",
+        "description": "First name of the user",
+        "example": "Danny"
+      },
+      "LastName": {
+        "type": "string",
+        "description": "last name of the user",
+        "example": "Zhou"
+      },
+      "UserId": {
+        "type": "number",
+        "description": "ID of the User",
+        "example": 4566
+      },
+      "ProjectId": {
+        "type": "number",
+        "description": "ID of the project",
+        "example": 5295343
+      },
+      "ProjectName": {
+        "type": "string",
+        "description": "Name of project",
+        "example": "jacd project"
+      },
+      "ProjectCreator": {
+        "type": "string",
+        "example": "example@unsw.edu.au",
+        "description": "Email address of the creator of the project"
+      },
+      "ProjectMembers": {
+        "type": "array",
+        "example": [
+          "example@unsw.edu.au",
+          "example1@unsw.edu.au",
+          "example3@unsw.edu.au"
+        ],
+        "description": "Email address of the creator of the project"
+      },
+      "ProjectDescription": {
+        "type": "string",
+        "example": "This is a JACD project",
+        "description": "Provides a brief description of the project"
+      },
+      "CreationDate": {
+        "type": "string",
+        "example": "2023-02-21T17:32:28"
+      },
+      "ProjectTasks": {
+        "type": "array",
+        "example": [
+          132,
+          133,
+          147,
+          151,
+          188
+        ]
+      },
+      "ProjectSettings": {
+        "type": "object",
+        "example": {
+          "theme": "Dark"
+        }
+      },
+      "TaskId": {
+        "type": "number",
+        "description": "ID of the task",
+        "example": 4321
+      },
+      "TaskName": {
+        "type": "string",
+        "description": "Name of Task",
+        "example": "example task"
+      },
+      "TaskDescription": {
+        "type": "string",
+        "description": "Description of Task",
+        "example": "describe task here"
+      },
+      "TaskAssignee": {
+        "type": "number",
+        "description": "Current Assignee",
+        "example": 23413
+      },
+      "TaskCreator": {
+        "type": "number",
+        "description": "Current Assignee",
+        "example": 87454
+      },
+      "DeadlineDate": {
+        "type": "string",
+        "example": "2023-02-26T13:36:48"
+      },
+      "TaskStatus": {
+        "type": "string",
+        "example": "Done"
+      }
+    },
+    "parameters": {
+      "AuthRegisterBody": {
+        "name": "Register info",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "$ref": "#/components/fields/Email"
+            },
+            "password": {
+              "$ref": "#/components/fields/Password"
+            },
+            "fname": {
+              "$ref": "#/components/fields/FirstName"
+            },
+            "lname": {
+              "$ref": "#/components/fields/LastName"
+            }
+          }
+        }
+      },
+      "AuthLoginBody": {
+        "name": "Login info",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "$ref": "#/components/fields/Email"
+            },
+            "password": {
+              "$ref": "#/components/fields/Password"
+            },
+            "rememberMe": {
+              "$ref": "#/components/fields/RememberMe"
+            }
+          }
+        }
+      },
+      "Authorization": {
+        "name": "Authorization",
+        "in": "header",
+        "schema": {
+          "type": "string",
+          "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhheWRlbkB1bnN3LmVkdS5hdSIsImlhdCI6MTYwMzk0MzIzMH0.b37PfwlcH_cue6yhgvDt2IiNvhRACf79hTNtacYB94Q"
+        },
+        "required": true,
+        "description": "Bearer [token]"
+      },
+      "ProjectsCreate": {
+        "name": "Create project body",
+        "description": "Details required to create new project",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "u_id": {
+              "$ref": "#/components/fields/UserId"
+            },
+            "p_name": {
+              "$ref": "#/components/fields/ProjectName"
+            },
+            "p_description": {
+              "$ref": "#/components/fields/ProjectDescription"
+            }
+          }
+        }
+      },
+      "ProjectIdQuery": {
+        "in": "path",
+        "name": "ProjectId",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1
+        },
+        "example": 312894,
+        "description": "ID of the Project"
+      },
+      "ProjectsPut": {
+        "name": "Project details",
+        "description": "An object of project details to be updated",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "p_name": {
+              "$ref": "#/components/fields/ProjectName"
+            },
+            "p_description": {
+              "$ref": "#/components/fields/ProjectDescription"
+            }
+          }
+        }
+      },
+      "TasksCreate": {
+        "name": "Create task body",
+        "description": "Details required to create new task",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "t_name": {
+              "$ref": "#/components/fields/TaskName"
+            },
+            "t_description": {
+              "$ref": "#/components/fields/TaskDescription"
+            },
+            "assignee_id": {
+              "$ref": "#/components/fields/TaskAssignee"
+            },
+            "creator_id": {
+              "$ref": "#/components/fields/TaskCreator"
+            },
+            "task_status": {
+              "$ref": "#/components/fields/TaskStatus"
+            },
+            "deadline": {
+              "$ref": "#/components/fields/DeadlineDate"
+            }
+          }
+        }
+      },
+      "TasksPut": {
+        "name": "Task details",
+        "description": "An object of task details to be updated",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "t_name": {
+              "$ref": "#/components/fields/TaskName"
+            },
+            "t_description": {
+              "$ref": "#/components/fields/TaskDescription"
+            },
+            "assignee_id": {
+              "$ref": "#/components/fields/TaskAssignee"
+            },
+            "task_status": {
+              "$ref": "#/components/fields/TaskStatus"
+            },
+            "deadline": {
+              "$ref": "#/components/fields/DeadlineDate"
+            }
+          }
+        }
+      },
+      "TaskIdQuery": {
+        "in": "path",
+        "name": "TaskId",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1
+        },
+        "example": 312894,
+        "description": "Query task with Id"
+      },
+      "UsersPut": {
+        "name": "User details",
+        "description": "An object of user details to be updated",
+        "in": "body",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "fname": {
+              "$ref": "#/components/fields/FirstName"
+            },
+            "lname": {
+              "$ref": "#/components/fields/LastName"
+            },
+            "email": {
+              "$ref": "#/components/fields/Email"
+            },
+            "password": {
+              "$ref": "#/components/fields/Password"
+            }
+          }
+        }
+      },
+      "UserIdQuery": {
+        "in": "path",
+        "name": "UserId",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1
+        },
+        "example": 312894,
+        "description": "Query user with Id"
+      }
+    },
+    "responses": {
+      "200": {
+        "Token": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "u_id": {
+                "$ref": "#/components/fields/UserId"
+              },
+              "token": {
+                "type": "string",
+                "description": "JWT Token to provide authorisation",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+              }
+            }
+          }
+        },
+        "Empty": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "ProjectsGetAll": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "projects": {
+                "type": "array",
+                "description": "List of all projects",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "p_id": {
+                      "$ref": "#/components/fields/ProjectId"
+                    },
+                    "p_name": {
+                      "$ref": "#/components/fields/ProjectName"
+                    },
+                    "creator_id": {
+                      "$ref": "#/components/fields/ProjectCreator"
+                    },
+                    "creation_date": {
+                      "$ref": "#/components/fields/CreationDate"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ProjectsCreate": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "$ref": "#/components/fields/ProjectId"
+              }
+            }
+          }
+        },
+        "ProjectsGet": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "p_id": {
+                "$ref": "#/components/fields/ProjectId"
+              },
+              "p_name": {
+                "$ref": "#/components/fields/ProjectName"
+              },
+              "creator_id": {
+                "$ref": "#/components/fields/ProjectCreator"
+              },
+              "members": {
+                "$ref": "#/components/fields/ProjectMembers"
+              },
+              "creation_date": {
+                "$ref": "#/components/fields/CreationDate"
+              },
+              "tasks": {
+                "$ref": "#/components/fields/ProjectTasks"
+              },
+              "settings": {
+                "$ref": "#/components/fields/ProjectSettings"
+              }
+            }
+          }
+        },
+        "TasksCreate": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "$ref": "#/components/fields/TaskId"
+              }
+            }
+          }
+        },
+        "TasksGetAll": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "tasks": {
+                "type": "array",
+                "description": "List of all tasks",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "t_id": {
+                      "$ref": "#/components/fields/TaskId"
+                    },
+                    "t_name": {
+                      "$ref": "#/components/fields/TaskName"
+                    },
+                    "t_creator": {
+                      "$ref": "#/components/fields/TaskCreator"
+                    },
+                    "assignee_id": {
+                      "$ref": "#/components/fields/TaskAssignee"
+                    },
+                    "task_status": {
+                      "$ref": "#/components/fields/TaskStatus"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "TasksGet": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "t_id": {
+                "$ref": "#/components/fields/TaskId"
+              },
+              "t_name": {
+                "$ref": "#/components/fields/TaskName"
+              },
+              "t_description": {
+                "$ref": "#/components/fields/TaskDescription"
+              },
+              "assignee_id": {
+                "$ref": "#/components/fields/TaskAssignee"
+              },
+              "creator_id": {
+                "$ref": "#/components/fields/TaskCreator"
+              },
+              "creation_date": {
+                "$ref": "#/components/fields/CreationDate"
+              },
+              "deadline": {
+                "$ref": "#/components/fields/DeadlineDate"
+              },
+              "task_status": {
+                "$ref": "#/components/fields/TaskStatus"
+              }
+            }
+          }
+        },
+        "UsersGetAll": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "users": {
+                "type": "array",
+                "description": "List of all user",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "u_id": {
+                      "$ref": "#/components/fields/UserId"
+                    },
+                    "fname": {
+                      "$ref": "#/components/fields/FirstName"
+                    },
+                    "lname": {
+                      "$ref": "#/components/fields/LastName"
+                    },
+                    "email": {
+                      "$ref": "#/components/fields/Email"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "UsersGet": {
+          "description": "OK",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "u_id": {
+                "$ref": "#/components/fields/UserId"
+              },
+              "fname": {
+                "$ref": "#/components/fields/FirstName"
+              },
+              "lname": {
+                "$ref": "#/components/fields/LastName"
+              },
+              "email": {
+                "$ref": "#/components/fields/Email"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad Input",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string",
+              "description": "Error message returned from server",
+              "example": "Invalid input"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string",
+              "description": "Error message returned from server",
+              "example": "Invalid Token"
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Conflict",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "string",
+              "description": "Error message returned from server",
+              "example": "Project Name Already Exists"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Given correct user credentials, return an authorised access token to make subsequent user calls",
+        "tags": [
+          "User Auth"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AuthLoginBody"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Token"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Send registration request for a new user to create an account",
+        "tags": [
+          "User Auth"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AuthRegisterBody"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Token"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Invalidate a particular authorised token",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "User Auth"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "summary": "Get a list of all projects",
+        "tags": [
+          "Project Management"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/ProjectsGetAll"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/projects/create": {
+      "post": {
+        "summary": "Create a new project",
+        "tags": [
+          "Project Management"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/ProjectsCreate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/ProjectsCreate"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/projects/{ProjectId}": {
+      "delete": {
+        "summary": "Delete a particular project",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Project Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/ProjectIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "get": {
+        "summary": "Return all available data of a project",
+        "tags": [
+          "Project Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ProjectIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/ProjectsGet"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update the details of a project",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Project Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/ProjectIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/ProjectsPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "Get a list of all tasks",
+        "tags": [
+          "Task Management"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/TasksGetAll"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/tasks/create/{ProjectId}": {
+      "post": {
+        "summary": "Create a new task in project",
+        "tags": [
+          "Task Management"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/ProjectIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/TasksCreate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/TasksCreate"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/tasks/projects/{ProjectId}": {
+      "get": {
+        "summary": "Get all tasks in project",
+        "tags": [
+          "Task Management"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/ProjectIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/TasksGetAll"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/tasks/{TaskId}": {
+      "delete": {
+        "summary": "Delete a particular task",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Task Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/TaskIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "get": {
+        "summary": "Return all available data of a task",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Task Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/TaskIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/TasksGet"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update the details of a project",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Task Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Authorization"
+          },
+          {
+            "$ref": "#/components/parameters/TaskIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/TasksPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/tasks/user/{UserId}": {
+      "get": {
+        "summary": "Return all tasks assigned to user id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Task Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/TasksGetAll"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get a list of all users",
+        "tags": [
+          "Profile and User Management"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/UsersGetAll"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    },
+    "/users/{UserId}": {
+      "get": {
+        "summary": "Get details of user",
+        "tags": [
+          "Profile and User Management"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/UsersGet"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Profile and User Management"
+        ],
+        "summary": "Update user's own profile",
+        "description": "Updates the user's name, email, password",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserIdQuery"
+          },
+          {
+            "$ref": "#/components/parameters/UsersPut"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Profile and User Management"
+        ],
+        "summary": "Delete the user's account",
+        "description": "Deletes account and logs out (invalidating token)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserIdQuery"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200/Empty"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Danny/Desktop/uni/2k23/comp3900/capstone-project-3900w18agamergirls/jacd/backend/database.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2079"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:maintasks"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="active_sessions" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="45"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="friends" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="43"/><column index="2" value="43"/><column index="3" value="129"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="friends_list" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="2" mode="0"/></sort><column_widths><column index="1" value="65"/><column index="2" value="129"/><column index="3" value="137"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="messages" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="133"/><column index="3" value="90"/><column index="4" value="155"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="projects" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="65"/><column index="3" value="59"/><column index="4" value="61"/><column index="5" value="129"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="requests" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="72"/><column index="3" value="81"/><column index="4" value="52"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sqlite_sequence" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="53"/><column index="2" value="40"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="tasks" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="40"/><column index="3" value="90"/><column index="4" value="79"/><column index="5" value="57"/><column index="6" value="94"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="user" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="64"/><column index="3" value="62"/><column index="4" value="300"/><column index="5" value="194"/><column index="6" value="129"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="user_projects" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="40"/><column index="2" value="40"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE &quot;tasks&quot; (
+	&quot;t_id&quot;	INTEGER NOT NULL,
+	&quot;p_id&quot;	INTEGER NOT NULL,
+	&quot;t_creator_id&quot;	INTEGER NOT NULL,
+	&quot;t_assignee&quot;	INTEGER,
+	&quot;t_name&quot;	TEXT NOT NULL,
+	&quot;t_description&quot;	NUMERIC,
+	&quot;t_deadline&quot;	TEXT CHECK(CURRENT_TIMESTAMP),
+	&quot;t_creation_date&quot;	TEXT DEFAULT CURRENT_TIMESTAMP,
+	&quot;t_status&quot;	TEXT NOT NULL DEFAULT 'To Do',
+	PRIMARY KEY(&quot;t_id&quot;)
+);</sql><sql name="Edit Trigger delete_user_projects">
+SELECT DISTINCT u_id2 as friend_id, add_date  FROM friends 
+WHERE u_id1 = 49
+UNION ALL
+SELECT DISTINCT u_id1 as friend_id , add_date FROM friends 
+WHERE u_id2 = 49
+ORDER BY add_date
+
+</sql><sql name="SQL 4">CREATE TRIGGER remove_from_friends AFTER DELETE
+ON user
+FOR EACH ROW
+BEGIN
+DELETE FROM friends
+WHERE u_id1 = OLD.u_id1 or u_id2 = OLD.u_id2;
+END</sql><sql name="Edit Trigger remove_from_friends">DROP TRIGGER &quot;main&quot;.&quot;remove_from_friends&quot;;
+CREATE TRIGGER remove_from_friends AFTER DELETE
+ON user
+FOR EACH ROW
+BEGIN
+DELETE FROM friends
+WHERE u_id1 = OLD.u_id or u_id2 = OLD.u_id;
+END</sql><sql name="SQL 6">SELECT * FROM tasks WHERE t_assignee = 44 and t_deadline BETWEEN DATE('now') AND DATE('now','+7 day')</sql><current_tab id="4"/></tab_sql></sqlb_project>
